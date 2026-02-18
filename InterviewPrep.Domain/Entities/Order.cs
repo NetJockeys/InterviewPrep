@@ -1,7 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using InterviewPrep.Infrastructure;
 
-namespace InterviewPrep.Infrastructure;
+namespace InterviewPrep.Domain.Entities;
 
 public partial class Order
 {
@@ -9,5 +8,18 @@ public partial class Order
 
     public DateTime? DatePlaced { get; set; }
 
-    public virtual ICollection<OrderLine> OrderLines { get; set; } = new List<OrderLine>();
+    public ICollection<OrderLine> OrderLines { get; set; } = new List<OrderLine>();
+
+    public void AddOrderLine(OrderLine orderLine)
+    {
+        OrderLines.Add(orderLine);
+    }
+
+    public void AddOrderLines(IEnumerable<OrderLine> orderLines)
+    {
+        foreach (var line in orderLines)
+        {
+            OrderLines.Add(line);
+        }
+    }
 }

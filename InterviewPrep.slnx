@@ -3,4 +3,5 @@
   <Project Path="InterviewPrep.Domain/InterviewPrep.Domain.csproj" />
   <Project Path="InterviewPrep.Infrastructure/InterviewPrep.Infrastructure.csproj" />
   <Project Path="InterviewPrep/InterviewPrep.csproj" />
+  <Project Path="tests/InterviewPrep.Tests/InterviewPrep.Tests.csproj" />
 </Solution>

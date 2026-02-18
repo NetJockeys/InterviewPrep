@@ -1,11 +1,14 @@
 using InterviewPrep.Domain.Entities;
-using InterviewPrep.Infrastructure;
-using InterviewPrep.Infrastructure.Persistence;
+using InterviewPrep.Infrastructure.Repositories.ProductRepository;
+using InterviewPrep.Infrastructure.Repositories.UnitOfWork;
 using MediatR;
 
 namespace InterviewPrep.Application.Products.Commands.CreateProduct;
 
-public class CreateProductRequestHandler(ApplicationDbContext context) : IRequestHandler<CreateProductRequest, long>
+public class CreateProductRequestHandler(
+    IProductRepository productRepository,
+    IUnitOfWork unitOfWork
+    ) : IRequestHandler<CreateProductRequest, long>
 {
     public async Task<long> Handle(CreateProductRequest request, CancellationToken cancellationToken)
     {
@@ -15,8 +18,8 @@ public class CreateProductRequestHandler(ApplicationDbContext context) : IReques
             ProductPrice = request.ProductPrice
         };
 
-        await context.AddAsync(product, cancellationToken);
-        await context.SaveChangesAsync(cancellationToken);
+        await productRepository.AddProductAsync(product, cancellationToken);
+        await unitOfWork.CommitAsync(cancellationToken);
 
         return product.ProductId;
     }
