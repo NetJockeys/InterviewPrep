@@ -1,6 +1,4 @@
-﻿using InterviewPrep.Infrastructure;
-
-namespace InterviewPrep.Domain.Entities;
+﻿namespace InterviewPrep.Domain.Entities;
 
 public partial class Product
 {

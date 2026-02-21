@@ -1,5 +1,5 @@
 using FluentAssertions;
-using InterviewPrep.Application.Orders.Commands.PlaceOrder;
+using InterviewPrep.Application.Features.Orders.Commands.PlaceOrder;
 using InterviewPrep.Domain.Entities;
 using InterviewPrep.Infrastructure.Repositories.OrderRepository;
 using InterviewPrep.Infrastructure.Repositories.UnitOfWork;
@@ -31,8 +31,6 @@ public class PlaceOrderRequestHandlerTests
     [Test]
     public async Task Handle_Should_Create_Order_And_Save()
     {
-        // Arrange
-
         var orderLines = new List<OrderLineDto>
         {
             new OrderLineDto(1, 2),
@@ -48,7 +46,6 @@ public class PlaceOrderRequestHandlerTests
             {
                 capturedOrder = order;
 
-                // simulate DB identity assignment
                 order.GetType()
                      .GetProperty("OrderId")!
                      .SetValue(order, 123L);
@@ -59,10 +56,8 @@ public class PlaceOrderRequestHandlerTests
             .Setup(u => u.CommitAsync(It.IsAny<CancellationToken>()))
             .ReturnsAsync(1);
 
-        // Act
         var result = await _handler.Handle(request, CancellationToken.None);
 
-        // Assert
         result.Should().Be(123L);
 
         capturedOrder.Should().NotBeNull();

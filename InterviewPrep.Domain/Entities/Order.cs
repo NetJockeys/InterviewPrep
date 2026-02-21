@@ -1,6 +1,4 @@
-﻿using InterviewPrep.Infrastructure;
-
-namespace InterviewPrep.Domain.Entities;
+﻿namespace InterviewPrep.Domain.Entities;
 
 public partial class Order
 {
@@ -17,9 +15,9 @@ public partial class Order
 
     public void AddOrderLines(IEnumerable<OrderLine> orderLines)
     {
-        foreach (var line in orderLines)
+        if (OrderLines is List<OrderLine> list)
         {
-            OrderLines.Add(line);
+            list.AddRange(orderLines);
         }
     }
 }

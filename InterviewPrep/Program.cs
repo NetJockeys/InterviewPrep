@@ -1,7 +1,6 @@
-using InterviewPrep;
-using InterviewPrep.Application;
-using InterviewPrep.Application.Orders.Queries.GetOrder;
-using InterviewPrep.Application.Orders.ViewModels;
+using InterviewPrep.Application.Dependencies;
+using InterviewPrep.Application.Features.Orders.Queries.GetOrder;
+using InterviewPrep.Application.Features.Orders.ViewModels;
 using InterviewPrep.Application.Products.Commands.CreateProduct;
 using InterviewPrep.Application.Products.GetProducts;
 using InterviewPrep.Application.ViewModels;
@@ -27,6 +26,14 @@ builder.Services
     .AddApplication()
     .AddInfrastructure();
 
+builder.Services.AddCors(options =>
+{
+    options.AddDefaultPolicy(policy =>
+        policy.AllowAnyOrigin()    // ⚠️ Only for development! In production, restrict to your frontend URL
+            .AllowAnyMethod()
+            .AllowAnyHeader());
+});
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -41,6 +48,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+app.UseCors(); 
 
 app.MapGet("/getproducts", async (IMediator mediator) =>
     {

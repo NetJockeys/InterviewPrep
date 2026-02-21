@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using InterviewPrep.Domain.Entities;
-
-namespace InterviewPrep.Infrastructure;
+﻿namespace InterviewPrep.Domain.Entities;
 
 public partial class OrderLine
 {
