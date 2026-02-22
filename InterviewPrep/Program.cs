@@ -4,6 +4,7 @@ using InterviewPrep.Application.Features.Orders.ViewModels;
 using InterviewPrep.Application.Products.Commands.CreateProduct;
 using InterviewPrep.Application.Products.GetProducts;
 using InterviewPrep.Application.ViewModels;
+using InterviewPrep.HttpResponses;
 using InterviewPrep.Infrastructure;
 using MediatR;
 using Microsoft.OpenApi;
@@ -75,14 +76,13 @@ app.MapPost("/createproduct", async (CreateProductViewModel product, IMediator m
 
 app.MapGet("/getorder", async (long orderId, IMediator mediator) =>
     {
-        var getOrderByIdQuery = new GetOrderByIdRequest(
-            orderId
-        );
-        
-        var result = await mediator.Send(getOrderByIdQuery);
-        return Results.Ok(result);
-    }).WithName("GetOrder")
-    .Produces<ReadOrderViewModel>()
+        var result = await mediator.Send(new GetOrderByIdRequest(orderId));
+        return result.ToMinimalApiResult();
+    })
+    .WithName("GetOrder")
+    .Produces<ReadOrderViewModel>(StatusCodes.Status200OK)
+    .Produces(StatusCodes.Status404NotFound)
+    .Produces(StatusCodes.Status400BadRequest)
     .WithOpenApi();
 
 app.Run();

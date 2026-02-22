@@ -15,7 +15,7 @@ public class HandlerResponseDto<T>
 
     // Success
     public static HandlerResponseDto<T> Success(T data)
-        => new HandlerResponseDto<T>
+        => new()
         {
             IsSuccess = true,
             Data = data,
@@ -23,7 +23,7 @@ public class HandlerResponseDto<T>
         };
 
     public static HandlerResponseDto<T> SuccessCreated(T data)
-        => new HandlerResponseDto<T>
+        => new()
         {
             IsSuccess = true,
             Data = data,
@@ -31,7 +31,7 @@ public class HandlerResponseDto<T>
         };
 
     public static HandlerResponseDto<T> SuccessAccepted(T data)
-        => new HandlerResponseDto<T>
+        => new()
         {
             IsSuccess = true,
             Data = data,
@@ -39,7 +39,7 @@ public class HandlerResponseDto<T>
         };
 
     public static HandlerResponseDto<T> SuccessNoContent()
-        => new HandlerResponseDto<T>
+        => new()
         {
             IsSuccess = true,
             Data = default,
@@ -48,7 +48,7 @@ public class HandlerResponseDto<T>
 
     // Error
     public static HandlerResponseDto<T> FailureNotFound(string? message = null)
-        => new HandlerResponseDto<T>
+        => new()
         {
             IsSuccess = false,
             Data = default,
@@ -57,7 +57,7 @@ public class HandlerResponseDto<T>
         };
 
     public static HandlerResponseDto<T> FailureBadRequest(string? message = null)
-        => new HandlerResponseDto<T>
+        => new()
         {
             IsSuccess = false,
             Data = default,
@@ -66,7 +66,7 @@ public class HandlerResponseDto<T>
         };
 
     public static HandlerResponseDto<T> FailureUnauthorized(string? message = null)
-        => new HandlerResponseDto<T>
+        => new()
         {
             IsSuccess = false,
             Data = default,
@@ -75,7 +75,7 @@ public class HandlerResponseDto<T>
         };
 
     public static HandlerResponseDto<T> FailureForbidden(string? message = null)
-        => new HandlerResponseDto<T>
+        => new()
         {
             IsSuccess = false,
             Data = default,
@@ -84,7 +84,7 @@ public class HandlerResponseDto<T>
         };
 
     public static HandlerResponseDto<T> FailureConflict(string? message = null)
-        => new HandlerResponseDto<T>
+        => new()
         {
             IsSuccess = false,
             Data = default,
@@ -93,7 +93,7 @@ public class HandlerResponseDto<T>
         };
 
     public static HandlerResponseDto<T> FailureInternal(string? message = null)
-        => new HandlerResponseDto<T>
+        => new()
         {
             IsSuccess = false,
             Data = default,
