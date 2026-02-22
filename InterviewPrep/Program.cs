@@ -1,12 +1,6 @@
 using InterviewPrep.Application.Dependencies;
-using InterviewPrep.Application.Features.Orders.Queries.GetOrder;
-using InterviewPrep.Application.Features.Orders.ViewModels;
-using InterviewPrep.Application.Products.Commands.CreateProduct;
-using InterviewPrep.Application.Products.GetProducts;
-using InterviewPrep.Application.ViewModels;
-using InterviewPrep.HttpResponses;
+using InterviewPrep.Endpoints;
 using InterviewPrep.Infrastructure;
-using MediatR;
 using Microsoft.OpenApi;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -51,39 +45,47 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 app.UseCors(); 
 
-app.MapGet("/getproducts", async (IMediator mediator) =>
-    {
-        var getProductRequest = new GetProductsRequest();
-        var result = await mediator.Send(getProductRequest);
-        return Results.Ok(result);
-    })
-    .WithName("GetProducts")
-    .Produces<IEnumerable<ReadProductViewModel>>()
-    .WithOpenApi(); // Enables metadata for Swagger
+app.MapEndpoints();
 
-app.MapPost("/createproduct", async (CreateProductViewModel product, IMediator mediator) =>
-    {
-        var createProductCommand = new CreateProductRequest(
-            product.ProductDescription,
-            product.ProductPrice
-            );
-        
-        var result = await mediator.Send(createProductCommand);
-        return Results.Ok(result);
-    }).WithName("CreateProduct")
-    .Produces<long>()
-    .WithOpenApi();
+// app.MapGet("/getproducts", async (IMediator mediator) =>
+//     {
+//         var getProductRequest = new GetProductsRequest();
+//         var result = await mediator.Send(getProductRequest);
+//         return Results.Ok(result);
+//     })
+//     .WithName("GetProducts")
+//     .WithTags("Products")
+//     .Produces<IEnumerable<ReadProductViewModel>>()
+//     .WithOpenApi(); // Enables metadata for Swagger
+//
+// app.MapPost("/createproduct", async (CreateProductViewModel product, IMediator mediator) =>
+//     {
+//         var createProductCommand = new CreateProductRequest(
+//             product.ProductDescription,
+//             product.ProductPrice
+//             );
+//         
+//         var result = await mediator.Send(createProductCommand);
+//         return Results.Ok(result);
+//     }).WithName("CreateProduct")
+//     .WithTags("Products")
+//     .Produces<long>()
+//     .WithOpenApi();
+//
+// app.MapGet("/getorder", async (long orderId, IMediator mediator) =>
+//     {
+//         var result = await mediator.Send(new GetOrderByIdRequest(orderId));
+//         return result.ToMinimalApiResult();
+//     })
+//     .WithName("GetOrder")
+//     .WithTags("Orders")
+//     .Produces<ReadOrderViewModel>(StatusCodes.Status200OK)
+//     .Produces(StatusCodes.Status404NotFound)
+//     .Produces(StatusCodes.Status400BadRequest)
+//     .WithOpenApi();
 
-app.MapGet("/getorder", async (long orderId, IMediator mediator) =>
-    {
-        var result = await mediator.Send(new GetOrderByIdRequest(orderId));
-        return result.ToMinimalApiResult();
-    })
-    .WithName("GetOrder")
-    .Produces<ReadOrderViewModel>(StatusCodes.Status200OK)
-    .Produces(StatusCodes.Status404NotFound)
-    .Produces(StatusCodes.Status400BadRequest)
-    .WithOpenApi();
+
+
 
 app.Run();
 
